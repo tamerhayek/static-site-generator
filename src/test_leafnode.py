@@ -21,11 +21,11 @@ class TestLeafNode(unittest.TestCase):
 		node = LeafNode("p", "This is a html node")
 		self.assertEqual(repr(node), "<p>This is a html node</p>")
 	def test_to_html_no_value(self):
-		node = LeafNode("p")
+		node = LeafNode("p", None)
 		self.assertRaises(ValueError, node.to_html)
 	def test_to_html_no_tag(self):
 		node = LeafNode(None, "This is a html node")
-		self.assertEqual(repr(node), "This is a html node")
+		self.assertEqual(node.to_html(), "This is a html node")
 	def test_to_html_props(self):
 		props = {
 			"href": "https://www.boot.dev",
@@ -33,7 +33,7 @@ class TestLeafNode(unittest.TestCase):
 			"class": "bold"
 		}
 		node = LeafNode("a", "This is a html node", props)
-		self.assertEqual(repr(node), "<a href='https://www.boot.dev' target='_blank' class='bold'>This is a html node</a>")
+		self.assertEqual(node.to_html(), "<a href='https://www.boot.dev' target='_blank' class='bold'>This is a html node</a>")
 	def test_repr(self):
 		props = {"class": "bold"}
 		node = LeafNode("p", "This is a html node", props)
