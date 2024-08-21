@@ -1,6 +1,6 @@
 import unittest
 
-from inline_markdown import extract_markdown_images, extract_markdown_links, split_nodes_delimiter, split_nodes_image, split_nodes_link
+from inline_markdown import extract_markdown_images, extract_markdown_links, split_nodes_delimiter, split_nodes_image, split_nodes_link, text_to_textnodes
 from textnode import TextNode, TextType
 
 class TestInlineMarkdown(unittest.TestCase):
@@ -224,6 +224,26 @@ class TestInlineMarkdown(unittest.TestCase):
 	def test_extract_markdown_images_no_images(self):
 		text = "This is text with no images"
 		self.assertEqual([], extract_markdown_images(text))
+
+	def test_text_to_textnodes(self):
+		nodes = text_to_textnodes("This is **bold** text with an *italic* word and a `code block` and an ![image](https://tamerhayek.com/avatar.webp) and a [link](https://tamerhayek.com)")
+
+		self.assertEqual(
+			nodes,
+			[
+				TextNode("This is ", TextType.TEXT, None),
+				TextNode("bold", TextType.BOLD, None),
+				TextNode(" text with an ", TextType.TEXT, None),
+				TextNode("italic", TextType.ITALIC, None),
+				TextNode(" word and a ", TextType.TEXT, None),
+				TextNode("code block", TextType.CODE, None),
+				TextNode(" and an ", TextType.TEXT, None),
+				TextNode("image", TextType.IMAGE, "https://tamerhayek.com/avatar.webp"),
+				TextNode(" and a ", TextType.TEXT, None),
+				TextNode("link", TextType.LINK, "https://tamerhayek.com"),
+			]
+		)
+
 
 if __name__ == "__main__":
 	unittest.main()
