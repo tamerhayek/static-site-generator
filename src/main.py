@@ -1,10 +1,11 @@
 import os
 import shutil
 
-from block_markdown import markdown_to_blocks
+from block_markdown import markdown_to_blocks, markdown_to_html_node
 
 def main():
 	copy("./static", "./public")
+	generate_page("./content/index.md", "./template.html", "./public/index.html")
 
 def copy(src: str, dst: str):
 	if not os.path.exists(src):
@@ -27,6 +28,18 @@ def extract_title(markdown: str):
 		if block.startswith("# "):
 			return block.replace("# ", "")
 	raise ValueError("No title found")
+
+def generate_page(from_path: str, template_path: str, dest_path: str):
+	print(f"Generating page from {from_path} to {dest_path} using {template_path}")
+	from_path_content = open(from_path, "r").read()
+	template_path_content = open(template_path, "r").read()
+
+	from_path_html = markdown_to_html_node(from_path_content).to_html()
+	from_path_title = extract_title(from_path_content)
+
+	html = template_path_content.replace("{{ Title }}", from_path_title).replace("{{ Content }}", from_path_html)
+
+	open(dest_path, "w").write(html)
 
 if __name__ == "__main__":
 	main()
