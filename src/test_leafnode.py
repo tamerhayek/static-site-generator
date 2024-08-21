@@ -28,12 +28,12 @@ class TestLeafNode(unittest.TestCase):
 		self.assertEqual(node.to_html(), "This is a html node")
 	def test_to_html_props(self):
 		props = {
-			"href": "https://www.boot.dev",
+			"href": "https://tamerhayek.com",
 			"target": "_blank",
 			"class": "bold"
 		}
 		node = LeafNode("a", "This is a html node", props)
-		self.assertEqual(node.to_html(), "<a href='https://www.boot.dev' target='_blank' class='bold'>This is a html node</a>")
+		self.assertEqual(node.to_html(), "<a href='https://tamerhayek.com' target='_blank' class='bold'>This is a html node</a>")
 	def test_repr(self):
 		props = {"class": "bold"}
 		node = LeafNode("p", "This is a html node", props)

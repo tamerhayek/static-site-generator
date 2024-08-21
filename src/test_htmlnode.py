@@ -28,9 +28,9 @@ class TestHTMLNode(unittest.TestCase):
 		node = HTMLNode("p", "This is a html node")
 		self.assertRaises(NotImplementedError, node.to_html)
 	def test_props_to_html(self):
-		props = {"href": "https://www.boot.dev", "class": "bold", "target": "_blank"}
+		props = {"href": "https://tamerhayek.com", "class": "bold", "target": "_blank"}
 		node = HTMLNode("a", "This is a html node", props=props)
-		self.assertEqual(node.props_to_html(), "href='https://www.boot.dev' class='bold' target='_blank'")
+		self.assertEqual(node.props_to_html(), "href='https://tamerhayek.com' class='bold' target='_blank'")
 	def test_repr(self):
 		childrens = [HTMLNode("b", "bold text")]
 		props = {"class": "bold"}
